@@ -35,14 +35,17 @@ class ChirpPolicy
     /**
      * Determine whether the user can update the model.
      */
-
+    public function update(User $user, Chirp $chirp): bool
+    {
+        return $user->id === $chirp->user_id;
+    }
 
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Chirp $chirp): bool
     {
-        return false;
+        return $user->id === $chirp->user_id;
     }
 
     /**
@@ -60,29 +63,4 @@ class ChirpPolicy
     {
         return false;
     }
-    public function edit(Chirp $chirp)
-{
-    // We'll add authorization in lesson 11
-    return view('chirps.edit', compact('chirp'));
-}
-
-public function update(Request $request, Chirp $chirp)
-{
-    // Validate
-    $validated = $request->validate([
-        'message' => 'required|string|max:255',
-    ]);
-
-    // Update
-    $chirp->update($validated);
-
-    return redirect('/')->with('success', 'Chirp updated!');
-}
-
-public function destroy(Chirp $chirp)
-{
-    $chirp->delete();
-
-    return redirect('/')->with('success', 'Chirp deleted!');
-}
 }
