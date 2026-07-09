@@ -42,8 +42,17 @@
             </a>
         </div>
         <div class="navbar-end gap-2">
-            <a href="#" class="btn btn-ghost btn-sm">Sign In</a>
-            <a href="#" class="btn btn-primary btn-sm">Sign Up</a>
+            @guest
+                <a href="{{ route('login') }}" class="btn btn-ghost btn-sm">Sign In</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Sign Up</a>
+            @endguest
+
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-ghost btn-sm">Log Out</button>
+                </form>
+            @endauth
         </div>
     </nav>
        <path fill="#D9D9D9"
